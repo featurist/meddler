@@ -1,8 +1,15 @@
 http = require 'http'
 url utils = require 'url'
 Memory Stream = require 'memorystream'
+async = require 'async'
 
 create memory stream () = new (Memory Stream (null, readable: false))
+
+handler = {
+    create proxy request (options, callback) =
+        
+        
+}
 
 forward request (request, response, url: nil, method: 'GET', headers: {}) =
     parsed url = url utils.parse (url) 
@@ -14,9 +21,7 @@ forward request (request, response, url: nil, method: 'GET', headers: {}) =
     
     proxy request = http.request (proxy request options) @(proxy response)
         proxy response.pipe (response)
-        proxy response.on 'end'
-            response.end()
-
+        proxy response.on 'end' @{ response.end() }
         response.write head (proxy response.status code, proxy response.headers)
 
     request.pipe (proxy request)
