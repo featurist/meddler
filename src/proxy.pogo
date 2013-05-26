@@ -23,7 +23,7 @@ forward request (http, request, response, url: nil, method: 'GET', headers: {}) 
     proxy request.on 'error' @(error)
         response.end()
 
-exports.create server (proxy request factory : http) =
+exports.create server (proxy requester : http) =
     
     authenticate request (request, response) then (respond) =
         header = request.headers.'proxy-authorization' || ''
@@ -43,7 +43,7 @@ exports.create server (proxy request factory : http) =
         authenticate request (request, response) then
             if (request.url.match (r/^http/))
                 forward request (
-                    proxy request factory
+                    proxy requester
                     request
                     response
                     url: request.url

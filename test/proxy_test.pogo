@@ -1,4 +1,4 @@
-proxy = require '../proxy'
+proxy = require '../src/proxy'
 http = require 'http'
 httpism = require 'httpism'
 
