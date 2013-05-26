@@ -1,4 +1,8 @@
 proxy = require './proxy'
+auth = require './auth'
 
-proxy.create server().listen(3000)
-console.log("http://127.0.0.1:3000")
+port = process.env.PORT || 3000
+
+middleware = [ auth.for users { featurist = 'cats' } ]
+proxy.create server( middleware: middleware ).listen(port)
+console.log "http://127.0.0.1:#(port)"

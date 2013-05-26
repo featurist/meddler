@@ -1,54 +1,39 @@
 http = require 'http'
-url utils = require 'url'
-Memory Stream = require 'memorystream'
-async = require 'async'
+url = require 'url'
 
-create memory stream () = new (Memory Stream (null, readable: false))
+exports.create server (middleware: []) =
+    requester = chain (middleware) together
+    http.create server @(request, response)
+        if (request.url.match (r/^http/))
+            forward request (requester, request, response)
+        else
+            response.end "this is not a website"
 
-forward request (http, request, response, url: nil, method: 'GET', headers: {}) =
-    parsed url = url utils.parse (url) 
-    port = parsed url.port
-    host = parsed url.hostname
-    path = parsed url.path || '/'
-    protocol = parsed url.protocol.replace r/:$/ ''
-    proxy request options = { host = host, port = port, method = method, path = path, headers = headers }
-    
-    proxy request = http.request (proxy request options) @(proxy response)
-        proxy response.pipe (response)
-        proxy response.on 'end' @{ response.end() }
-        response.write head (proxy response.status code, proxy response.headers)
+chain (middleware) together =
+    requester = http
+    for each @(wrapper) in (middleware)
+        requester := wrapper (requester)
+
+    requester
+
+forward request (http, request, response) =
+    options = forwarding options for (request)
+    proxy request = http.request (options) @(res)
+        res.pipe (response)
+        res.on 'end' @{ response.end() }
+        response.write head (res.status code, res.headers)
 
     request.pipe (proxy request)
-
     proxy request.on 'error' @(error)
         response.end()
 
-exports.create server (proxy requester : http) =
-    
-    authenticate request (request, response) then (respond) =
-        header = request.headers.'proxy-authorization' || ''
-        token = header.split(r/\s+/).pop() || ''
-        auth = @new Buffer(token, 'base64').to string()
-        parts = auth.split(r/:/)
-        username = parts.0
-        password = parts.1
-        
-        if ((username == 'featurist') && (password == 'cats'))        
-            respond()
-        else
-            response.write head (407, 'Proxy-Authenticate': 'Basic realm="Please enter your account details to continue"')
-            response.end "Please enter your account details to continue"
-    
-    http.create server @(request, response)
-        authenticate request (request, response) then
-            if (request.url.match (r/^http/))
-                forward request (
-                    proxy requester
-                    request
-                    response
-                    url: request.url
-                    method: request.method
-                    headers: request.headers
-                )
-            else
-                response.end "Coming soon!"
+forwarding options for (request) =
+    parsed url = url.parse (request.url)
+    {
+        host = parsed url.hostname
+        port = parsed url.port
+        method = request.method
+        path = parsed url.path || '/'
+        headers = request.headers
+    }
+
