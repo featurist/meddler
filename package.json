@@ -1,39 +1,40 @@
 {
-    "name": "proxy-knoxy",
-    "version": "0.0.1",
-    "description": "A programmable http proxy",
-    "maintainers": [
-        {
-            "name": "Josh Chisholm",
-            "email": "josh@featurist.co.uk",
-            "web": "http://featurist.co.uk/"
-        },
-        {
-            "name": "Adrian Longley",
-            "email": "adrian@featurist.co.uk",
-            "web": "http://featurist.co.uk/"
-        },
-        {
-            "name": "Tim Macfarlane",
-            "email": "tim@featurist.co.uk",
-            "web": "http://featurist.co.uk/"
-        }
-    ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/featurist/proxy-knoxy.git"
+  "name": "proxy-knoxy",
+  "version": "0.0.1",
+  "description": "A programmable http proxy",
+  "maintainers": [
+    {
+      "name": "Josh Chisholm",
+      "email": "josh@featurist.co.uk",
+      "web": "http://featurist.co.uk/"
     },
-    "devDependencies": {
-        "mocha": "latest",
-        "should": "latest",
-        "httpism": "latest"
+    {
+      "name": "Adrian Longley",
+      "email": "adrian@featurist.co.uk",
+      "web": "http://featurist.co.uk/"
     },
-    "dependencies": {
-		"pogo": "latest",
-        "connect": "latest",
-        "async": "latest",
-        "underscore": "latest",
-        "request": "latest",
-        "memorystream" : "git+https://github.com/refractalize/node-memorystream.git"
+    {
+      "name": "Tim Macfarlane",
+      "email": "tim@featurist.co.uk",
+      "web": "http://featurist.co.uk/"
     }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/featurist/proxy-knoxy.git"
+  },
+  "devDependencies": {
+    "mocha": "latest",
+    "should": "latest",
+    "httpism": "latest"
+  },
+  "dependencies": {
+    "pogo": "latest",
+    "connect": "latest",
+    "async": "latest",
+    "underscore": "latest",
+    "request": "latest",
+    "memorystream": "git+https://github.com/refractalize/node-memorystream.git",
+    "mocha": "~1.10.0"
+  }
 }

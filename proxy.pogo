@@ -5,13 +5,7 @@ async = require 'async'
 
 create memory stream () = new (Memory Stream (null, readable: false))
 
-handler = {
-    create proxy request (options, callback) =
-        
-        
-}
-
-forward request (request, response, url: nil, method: 'GET', headers: {}) =
+forward request (http, request, response, url: nil, method: 'GET', headers: {}) =
     parsed url = url utils.parse (url) 
     port = parsed url.port
     host = parsed url.hostname
@@ -29,7 +23,7 @@ forward request (request, response, url: nil, method: 'GET', headers: {}) =
     proxy request.on 'error' @(error)
         response.end()
 
-exports.create server() =
+exports.create server (proxy request factory : http) =
     
     authenticate request (request, response) then (respond) =
         header = request.headers.'proxy-authorization' || ''
@@ -49,6 +43,7 @@ exports.create server() =
         authenticate request (request, response) then
             if (request.url.match (r/^http/))
                 forward request (
+                    proxy request factory
                     request
                     response
                     url: request.url
