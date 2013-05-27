@@ -1,3 +1,4 @@
+Event Emitter = require 'events'.Event Emitter
 http = require 'http'
 url = require 'url'
 
@@ -8,6 +9,15 @@ exports.create server (middleware: []) =
             forward request (requester, request, response)
         else
             response.end "this is not a website"
+
+exports.end response (status, body, callback) =
+    response = @new (Event Emitter)
+    response.status code = status
+    response.pipe (r) = r.end (body)
+    response.end () = true
+    callback (response)
+    response.emit 'end'
+    response
 
 chain (middleware) together =
     requester = http

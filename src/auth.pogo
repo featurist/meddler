@@ -35,7 +35,8 @@ unauthenticated (callback) =
     response.pipe (r) =
         r.write head (407, 'Proxy-Authenticate': 'Basic realm="' + prompt + '"')
         r.end (prompt)
-
+    
+    response.end() = true    
     callback (response)
     response.emit 'end'            
 
