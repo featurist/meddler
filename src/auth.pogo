@@ -7,7 +7,7 @@ handle request (inner, passwords, options, callback) =
     header = options.headers.'proxy-authorization' || ''
     authenticate (header, passwords) @(err, valid, username)        
         if (valid)
-            delete(options.headers.'proxy-authorization')
+            delete (options.headers.'proxy-authorization')
             options.username = username
             inner req := inner.request (options, callback)
         else
@@ -18,14 +18,14 @@ handle request (inner, passwords, options, callback) =
 authenticate (header, passwords, callback) =
     token = header.split(r/\s+/).pop()
     if (token)
-        auth = @new Buffer(token, 'base64').to string()
-        parts = auth.split(r/:/)
+        auth = @new Buffer (token, 'base64').to string()
+        parts = auth.split r/:/
         username = parts.0
         password = parts.1
         valid = passwords.(username) == password
         callback (nil, valid, username)
     else
-        callback(nil, false)
+        callback (nil, false)
 
 prompt = "Please enter your account details to continue"
 
