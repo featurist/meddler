@@ -24,17 +24,15 @@
     "url": "https://github.com/featurist/proxy-knoxy.git"
   },
   "devDependencies": {
-    "mocha": "latest",
+    "mocha": "~1.10.0",
     "should": "latest",
     "httpism": "latest"
   },
   "dependencies": {
     "pogo": "latest",
-    "connect": "latest",
-    "async": "latest",
-    "underscore": "latest",
-    "request": "latest",
-    "memorystream": "git+https://github.com/refractalize/node-memorystream.git",
-    "mocha": "~1.10.0"
+    "request": "latest"
+  },
+  "scripts": {
+     "test": "make spec"
   }
 }
