@@ -26,17 +26,17 @@ cornify (inner) = {
 
 rewrite html (response, callback) =
     headers = response.headers
-    inject response = @new (Transform)
-    inject response._transform (chunk, encoding, callback) =
+    injected = @new (Transform)
+    injected._transform (chunk, encoding, callback) =
         c = chunk.to string().replace(r/<\/body/gi, js + '</body')
         this.push (c)
         callback ()
 
     delete(headers.'content-length')
-    inject response.status code = response.status code
-    inject response.headers = headers
-    callback (inject response)
-    response.pipe(inject response)
+    injected.status code = response.status code
+    injected.headers = headers
+    response.pipe(injected)
+    callback (injected)
 
 proxy.create server ( middleware: [ cornify ] ).listen(port)
 console.log "http://127.0.0.1:#(port)"
