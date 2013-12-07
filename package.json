@@ -24,5 +24,6 @@
   },
   "scripts": {
      "test": "make spec"
-  }
+  },
+  "engine": "node >= 0.10.22"
 }
