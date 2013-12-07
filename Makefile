@@ -1,8 +1,8 @@
 mocha :
-	mocha test/*_test.pogo
+	./node_modules/.bin/mocha test/*_test.pogo
 
 server :
-	pogo src/server.pogo
+	./node_modules/.bin/pogo src/server.pogo
 
 cuke :
 	bundle exec cucumber
